@@ -177,8 +177,6 @@ function renderExpenses(expenses) {
     return;
   }
 
-  expenses.sort((a, b) => b.id - a.id);
-
   container.innerHTML = expenses.map(expense => `
     <div class="expense-item">
       <div class="expense-icon ${getCategoryClass(expense.category)}">
@@ -189,7 +187,7 @@ function renderExpenses(expenses) {
         <div class="expense-meta">${expense.category} • ${expense.date}</div>
       </div>
       <div class="expense-amount">-${formatMoney(expense.amount)}</div>
-      <button class="expense-delete" onclick="deleteExpense(${expense.id})" title="Xóa">
+      <button class="expense-delete" onclick="deleteExpense('${expense._id}')" title="Xóa">
         ✕
       </button>
     </div>
