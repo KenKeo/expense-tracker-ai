@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản Lý Chi Tiêu</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <h1>💰 Chi Tiêu</h1>
+      <p class="subtitle">Quản lý tài chính cá nhân</p>
+    </header>
+
+    <!-- Thống kê -->
+    <div class="stats-card">
+      <div class="stat-item">
+        <span class="stat-label">Tổng chi tiêu</span>
+        <span class="stat-value" id="totalAmount">0 ₫</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Số giao dịch</span>
+        <span class="stat-value" id="totalCount">0</span>
+      </div>
+    </div>
+
+    <!-- Form thêm chi tiêu -->
+    <div class="card">
+      <h2>Thêm chi tiêu mới</h2>
+      <form id="expenseForm">
+        <div class="form-group">
+          <label for="description">Mô tả</label>
+          <input type="text" id="description" placeholder="VD: Cà phê sáng" required>
+        </div>
+        <div class="form-group">
+          <label for="amount">Số tiền (VNĐ)</label>
+          <input type="number" id="amount" placeholder="VD: 35000" required>
+        </div>
+        <div class="form-group">
+          <label for="category">Danh mục</label>
+          <select id="category">
+            <option value="ăn uống">🍜 Ăn uống</option>
+            <option value="di chuyển">🚗 Di chuyển</option>
+            <option value="mua sắm">🛒 Mua sắm</option>
+            <option value="giải trí">🎮 Giải trí</option>
+            <option value="hóa đơn">📄 Hóa đơn</option>
+            <option value="khác">📦 Khác</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">+ Thêm chi tiêu</button>
+      </form>
+    </div>
+
+    <!-- Danh sách chi tiêu -->
+    <div class="card">
+      <h2>Lịch sử chi tiêu</h2>
+      <div id="expenseList" class="expense-list">
+        <!-- Danh sách sẽ được render bởi JavaScript -->
+      </div>
+    </div>
+
+    <!-- Thống kê theo danh mục -->
+    <div class="card">
+      <h2>Theo danh mục</h2>
+      <div id="categoryStats" class="category-stats">
+        <!-- Thống kê sẽ được render bởi JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
