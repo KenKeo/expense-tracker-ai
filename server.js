@@ -11,9 +11,26 @@ const PORT = process.env.PORT || 3000;
 
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/expense-tracker';
 
-mongoose.connect(MONGODB_URI)
-  .then(() => console.log('✅ Đã kết nối MongoDB'))
-  .catch(err => console.error('❌ Lỗi kết nối MongoDB:', err));
+console.log('🔄 Đang kết nối MongoDB...');
+console.log('URI:', MONGODB_URI.replace(/:[^:@]+@/, ':****@')); // Ẩn password trong log
+
+mongoose.connect(MONGODB_URI, {
+  serverSelectionTimeoutMS: 10000,
+  connectTimeoutMS: 10000,
+})
+  .then(() => console.log('✅ Đã kết nối MongoDB thành công!'))
+  .catch(err => {
+    console.error('❌ Lỗi kết nối MongoDB:', err.message);
+    console.error('Chi tiết:', err);
+  });
+
+mongoose.connection.on('error', err => {
+  console.error('MongoDB connection error:', err);
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.log('MongoDB disconnected');
+});
 
 // ============ MODELS ============
 
