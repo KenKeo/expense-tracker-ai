@@ -5,67 +5,128 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quản Lý Chi Tiêu</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <div class="container">
-    <!-- Header -->
-    <header class="header">
-      <h1>💰 Chi Tiêu</h1>
-      <p class="subtitle">Quản lý tài chính cá nhân</p>
-    </header>
+    <!-- Auth Section (Đăng nhập/Đăng ký) -->
+    <div id="authSection" class="auth-section">
+      <div class="auth-card">
+        <h1>💰 Chi Tiêu</h1>
+        <p class="subtitle">Quản lý tài chính cá nhân</p>
 
-    <!-- Thống kê -->
-    <div class="stats-card">
-      <div class="stat-item">
-        <span class="stat-label">Tổng chi tiêu</span>
-        <span class="stat-value" id="totalAmount">0 ₫</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-label">Số giao dịch</span>
-        <span class="stat-value" id="totalCount">0</span>
-      </div>
-    </div>
+        <!-- Login Form -->
+        <form id="loginForm" class="auth-form">
+          <h2>Đăng nhập</h2>
+          <div class="form-group">
+            <input type="text" id="loginUsername" placeholder="Tên đăng nhập" required>
+          </div>
+          <div class="form-group">
+            <input type="password" id="loginPassword" placeholder="Mật khẩu" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Đăng nhập</button>
+          <p class="auth-switch">Chưa có tài khoản? <a href="#" id="showRegister">Đăng ký</a></p>
+        </form>
 
-    <!-- Form thêm chi tiêu -->
-    <div class="card">
-      <h2>Thêm chi tiêu mới</h2>
-      <form id="expenseForm">
-        <div class="form-group">
-          <label for="description">Mô tả</label>
-          <input type="text" id="description" placeholder="VD: Cà phê sáng" required>
-        </div>
-        <div class="form-group">
-          <label for="amount">Số tiền (VNĐ)</label>
-          <input type="number" id="amount" placeholder="VD: 35000" required>
-        </div>
-        <div class="form-group">
-          <label for="category">Danh mục</label>
-          <select id="category">
-            <option value="ăn uống">🍜 Ăn uống</option>
-            <option value="di chuyển">🚗 Di chuyển</option>
-            <option value="mua sắm">🛒 Mua sắm</option>
-            <option value="giải trí">🎮 Giải trí</option>
-            <option value="hóa đơn">📄 Hóa đơn</option>
-            <option value="khác">📦 Khác</option>
-          </select>
-        </div>
-        <button type="submit" class="btn btn-primary">+ Thêm chi tiêu</button>
-      </form>
-    </div>
+        <!-- Register Form -->
+        <form id="registerForm" class="auth-form" style="display: none;">
+          <h2>Đăng ký</h2>
+          <div class="form-group">
+            <input type="text" id="registerName" placeholder="Tên của bạn" required>
+          </div>
+          <div class="form-group">
+            <input type="text" id="registerUsername" placeholder="Tên đăng nhập" required>
+          </div>
+          <div class="form-group">
+            <input type="password" id="registerPassword" placeholder="Mật khẩu" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Đăng ký</button>
+          <p class="auth-switch">Đã có tài khoản? <a href="#" id="showLogin">Đăng nhập</a></p>
+        </form>
 
-    <!-- Danh sách chi tiêu -->
-    <div class="card">
-      <h2>Lịch sử chi tiêu</h2>
-      <div id="expenseList" class="expense-list">
-        <!-- Danh sách sẽ được render bởi JavaScript -->
+        <div id="authError" class="error-message"></div>
       </div>
     </div>
 
-    <!-- Thống kê theo danh mục -->
-    <div class="card">
-      <h2>Theo danh mục</h2>
-      <div id="categoryStats" class="category-stats">
-        <!-- Thống kê sẽ được render bởi JavaScript -->
+    <!-- Main App Section -->
+    <div id="appSection" style="display: none;">
+      <!-- Header -->
+      <header class="header">
+        <h1>💰 Chi Tiêu</h1>
+        <p class="subtitle">Xin chào, <span id="userName"></span>!</p>
+        <button id="logoutBtn" class="btn-logout">Đăng xuất</button>
+      </header>
+
+      <!-- Thống kê -->
+      <div class="stats-card">
+        <div class="stat-item">
+          <span class="stat-label">Tổng chi tiêu</span>
+          <span class="stat-value" id="totalAmount">0 ₫</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Số giao dịch</span>
+          <span class="stat-value" id="totalCount">0</span>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab active" data-tab="add">Thêm mới</button>
+        <button class="tab" data-tab="list">Danh sách</button>
+        <button class="tab" data-tab="chart">Biểu đồ</button>
+      </div>
+
+      <!-- Tab: Thêm chi tiêu -->
+      <div id="tab-add" class="tab-content active">
+        <div class="card">
+          <h2>Thêm chi tiêu mới</h2>
+          <form id="expenseForm">
+            <div class="form-group">
+              <label for="description">Mô tả</label>
+              <input type="text" id="description" placeholder="VD: Cà phê sáng" required>
+            </div>
+            <div class="form-group">
+              <label for="amount">Số tiền (VNĐ)</label>
+              <input type="number" id="amount" placeholder="VD: 35000" required>
+            </div>
+            <div class="form-group">
+              <label for="category">Danh mục</label>
+              <select id="category">
+                <option value="ăn uống">🍜 Ăn uống</option>
+                <option value="di chuyển">🚗 Di chuyển</option>
+                <option value="mua sắm">🛒 Mua sắm</option>
+                <option value="giải trí">🎮 Giải trí</option>
+                <option value="hóa đơn">📄 Hóa đơn</option>
+                <option value="khác">📦 Khác</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">+ Thêm chi tiêu</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Tab: Danh sách -->
+      <div id="tab-list" class="tab-content">
+        <div class="card">
+          <h2>Lịch sử chi tiêu</h2>
+          <div id="expenseList" class="expense-list"></div>
+        </div>
+      </div>
+
+      <!-- Tab: Biểu đồ -->
+      <div id="tab-chart" class="tab-content">
+        <div class="card">
+          <h2>Chi tiêu theo danh mục</h2>
+          <div class="chart-container">
+            <canvas id="categoryChart"></canvas>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Chi tiêu 7 ngày qua</h2>
+          <div class="chart-container">
+            <canvas id="weeklyChart"></canvas>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -16,11 +16,63 @@ body {
   margin: 0 auto;
 }
 
-/* Header */
+/* ============ AUTH SECTION ============ */
+.auth-section {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-card {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  width: 100%;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+.auth-card h1 {
+  font-size: 2.5rem;
+  margin-bottom: 8px;
+}
+
+.auth-card .subtitle {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.auth-form h2 {
+  font-size: 1.3rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.auth-switch {
+  margin-top: 20px;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.auth-switch a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.error-message {
+  color: #e53935;
+  margin-top: 15px;
+  font-size: 0.9rem;
+}
+
+/* ============ HEADER ============ */
 .header {
   text-align: center;
   color: white;
   margin-bottom: 24px;
+  position: relative;
 }
 
 .header h1 {
@@ -33,7 +85,25 @@ body {
   margin-top: 4px;
 }
 
-/* Stats Card */
+.btn-logout {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.2s;
+}
+
+.btn-logout:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+/* ============ STATS CARD ============ */
 .stats-card {
   background: white;
   border-radius: 16px;
@@ -61,7 +131,43 @@ body {
   color: #667eea;
 }
 
-/* Cards */
+/* ============ TABS ============ */
+.tabs {
+  display: flex;
+  background: white;
+  border-radius: 12px;
+  padding: 6px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.tab {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #666;
+  transition: all 0.2s;
+}
+
+.tab.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* ============ CARDS ============ */
 .card {
   background: white;
   border-radius: 16px;
@@ -78,7 +184,7 @@ body {
   border-bottom: 2px solid #f0f0f0;
 }
 
-/* Form */
+/* ============ FORM ============ */
 .form-group {
   margin-bottom: 16px;
 }
@@ -107,7 +213,7 @@ body {
   border-color: #667eea;
 }
 
-/* Buttons */
+/* ============ BUTTONS ============ */
 .btn {
   width: 100%;
   padding: 14px;
@@ -133,7 +239,7 @@ body {
   transform: translateY(0);
 }
 
-/* Expense List */
+/* ============ EXPENSE LIST ============ */
 .expense-list {
   display: flex;
   flex-direction: column;
@@ -207,49 +313,14 @@ body {
   color: #e53935;
 }
 
-/* Category Stats */
-.category-stats {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+/* ============ CHARTS ============ */
+.chart-container {
+  position: relative;
+  height: 250px;
+  margin-top: 10px;
 }
 
-.category-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.category-name {
-  width: 100px;
-  font-size: 0.9rem;
-  color: #555;
-}
-
-.category-bar-container {
-  flex: 1;
-  height: 24px;
-  background: #f0f0f0;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.category-bar {
-  height: 100%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 12px;
-  transition: width 0.5s ease;
-}
-
-.category-amount {
-  width: 100px;
-  text-align: right;
-  font-weight: 600;
-  color: #333;
-  font-size: 0.9rem;
-}
-
-/* Empty State */
+/* ============ EMPTY STATE ============ */
 .empty-state {
   text-align: center;
   padding: 30px;
@@ -261,7 +332,7 @@ body {
   margin-bottom: 10px;
 }
 
-/* Responsive */
+/* ============ RESPONSIVE ============ */
 @media (max-width: 400px) {
   body {
     padding: 12px;
@@ -275,13 +346,14 @@ body {
     font-size: 1.2rem;
   }
 
-  .category-name {
-    width: 80px;
-    font-size: 0.8rem;
+  .btn-logout {
+    position: relative;
+    display: block;
+    margin: 10px auto 0;
   }
 
-  .category-amount {
-    width: 80px;
+  .tab {
     font-size: 0.8rem;
+    padding: 10px;
   }
 }
