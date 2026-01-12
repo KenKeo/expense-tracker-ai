@@ -75,6 +75,16 @@ function requireAuth(req, res, next) {
   next();
 }
 
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  const dbStatus = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected';
+  res.json({
+    status: 'ok',
+    database: dbStatus,
+    time: new Date().toISOString()
+  });
+});
+
 // ============ AUTH APIs ============
 
 // Đăng ký
